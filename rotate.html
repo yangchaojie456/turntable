@@ -111,7 +111,7 @@
         var list = {}
         
         var angel = 360 / initData.list.length
-
+        // 格式化成需要的格式
         for (var i = 0, l = initData.list.length; i < l; i++) {
             list[initData.list[i].rank] = {
                 id:initData.list[i].id,
@@ -120,8 +120,7 @@
             }
         }
         // 查看奖品列表格式
-        console.log(JSON.stringify(list))
-        console.log(list)
+        
         // 定义转盘奖品
         wheelSurf = $('#myCanvas').WheelSurf({
             list: list, // 奖品 列表，(必填)
@@ -151,6 +150,7 @@
             throttle = false;
             var count = 0
             // 计算奖品角度
+
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {                    
                     if (winData.award.id == list[key].id) {
