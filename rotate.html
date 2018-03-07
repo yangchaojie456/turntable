@@ -53,39 +53,46 @@
         var initData = {
             "success": true,
             "list": [{
-                    "id": 1,
+                    "id": 100,
                     "name": "5000元京东卡",
-                    "image": "./images/1.png"
+                    "image": "./images/1.png",
+                    "rank":1
                 },
                 {
-                    "id": 2,
+                    "id": 101,
                     "name": "1000元京东卡",
-                    "image": "./images/2.png"
+                    "image": "./images/2.png",
+                    "rank":2
                 },
                 {
-                    "id": 3,
+                    "id": 102,
                     "name": "100个比特币",
-                    "image": "./images/3.png"
+                    "image": "./images/3.png",
+                    "rank":3
                 },
                 {
-                    "id": 4,
+                    "id": 103,
                     "name": "50元话费",
-                    "image": "./images/4.png"
+                    "image": "./images/4.png",
+                    "rank":4
                 },
                 {
-                    "id": 5,
+                    "id": 104,
                     "name": "100元话费",
-                    "image": "./images/5.png"
+                    "image": "./images/5.png",
+                    "rank":5
                 },
                 {
-                    "id": 6,
+                    "id": 105,
                     "name": "500个比特币",
-                    "image": "./images/6.png"
+                    "image": "./images/6.png",
+                    "rank":6
                 },
                 {
-                    "id": 7,
+                    "id": 106,
                     "name": "500元京东卡",
-                    "image": "./images/7.png"
+                    "image": "./images/7.png",
+                    "rank":7
                 }
             ]
         }
@@ -94,19 +101,20 @@
             "success": true,
             "message": "恭喜您！抽中5000元京东卡",
             "award": {
-                "id": 1,
+                "id": 100,
                 "name": "5000元京东卡"
             },
             "type": "goods"
         }
 
 
-        var list = []
+        var list = {}
         
         var angel = 360 / initData.list.length
 
         for (var i = 0, l = initData.list.length; i < l; i++) {
-            list[initData.list[i].id] = {
+            list[initData.list[i].rank] = {
+                id:initData.list[i].id,
                 name: initData.list[i].name,
                 image: initData.list[i].image
             }
@@ -143,14 +151,17 @@
             throttle = false;
             var count = 0
             // 计算奖品角度
-            for (var i = 0, l = initData.list.length; i < l; i++) {
-                if (winData.award.id == initData.list[i].id) {
-                    break;
+            for (const key in list) {
+                if (list.hasOwnProperty(key)) {                    
+                    if (winData.award.id == list[key].id) {
+                        break;
+                    }
+                    count++    
                 }
-                count++
             }
+      
             // 转盘抽奖，
-            wheelSurf.lottery(360 - (count * angel + angel / 2), function () {
+            wheelSurf.lottery((count * angel + angel / 2), function () {
                 $("#message").html(winData.message)
                 throttle = true;
             })

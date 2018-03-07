@@ -143,7 +143,8 @@
              */
             lottery: function (angel, callback) {
                 angel = angel || 0
-                angel += 360
+                angel = 360-angel
+                angel += 720
                 // 基值（减速）
                 var baseStep = 30
                 // 起始滚动速度
