@@ -4,8 +4,7 @@
 ## 兼容性
 > 适用于所有主流浏览器及移动端的浏览器。**IE8及以下不支持**
 ## demo
-http://www.baidu.com/
-[百度1](http://www.baidu.com/" 百度一下"){:target="_blank"}   
+    http://www.yangchaojie.top/plugins/turntable
 ## 用法
 ```html
     <body>
