@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./jquery1.12.js"></script>
+    <script src="./rotate.js"></script>
+    <title>抽奖</title>
+    <style>
+        .lottery {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lottery img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -76px;
+            margin-top: -82px;
+            cursor: pointer;
+        }
+
+        #message {
+            position: absolute;
+            top: 0px;
+            left: 10%;
+        }
+    </style>
+    <!--[if lte IE 8]>
+        <style>
+            .lottery img{
+                display: none;
+            }   
+        </style>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="lottery">
+        <canvas id="myCanvas" width="600" height="600" style="border:1px solid #d3d3d3;">
+            当前浏览器版本过低，请使用其他浏览器尝试
+        </canvas>
+        <p id="message"></p>
+        <img src="./images/start.png" id="start">
+    </div>
+
+    <script>
+        var wheelSurf
+        // 初始化装盘数据
+        var initData = {
+            "success": true,
+            "list": [{
+                    "id": 1,
+                    "name": "5000元京东卡",
+                    "image": "./images/1.png"
+                },
+                {
+                    "id": 2,
+                    "name": "1000元京东卡",
+                    "image": "./images/2.png"
+                },
+                {
+                    "id": 3,
+                    "name": "100个比特币",
+                    "image": "./images/3.png"
+                },
+                {
+                    "id": 4,
+                    "name": "50元话费",
+                    "image": "./images/4.png"
+                },
+                {
+                    "id": 5,
+                    "name": "100元话费",
+                    "image": "./images/5.png"
+                },
+                {
+                    "id": 6,
+                    "name": "500个比特币",
+                    "image": "./images/6.png"
+                },
+                {
+                    "id": 7,
+                    "name": "500元京东卡",
+                    "image": "./images/7.png"
+                }
+            ]
+        }
+        // 获奖信息
+        var winData = {
+            "success": true,
+            "message": "恭喜您！抽中5000元京东卡",
+            "award": {
+                "id": 1,
+                "name": "5000元京东卡"
+            },
+            "type": "goods"
+        }
+
+
+        var list = []
+        
+        var angel = 360 / initData.list.length
+
+        for (var i = 0, l = initData.list.length; i < l; i++) {
+            list[initData.list[i].id] = {
+                name: initData.list[i].name,
+                image: initData.list[i].image
+            }
+        }
+        // 查看奖品列表格式
+        console.log(JSON.stringify(list))
+        console.log(list)
+        // 定义转盘奖品
+        wheelSurf = $('#myCanvas').WheelSurf({
+            list: list, // 奖品 列表，(必填)
+            outerCircle: {
+                color: '#df1e15' // 外圈颜色(可选)
+            },
+            innerCircle: {
+                color: '#f4ad26' // 里圈颜色(可选)
+            },
+            dots: ['#fbf0a9', '#fbb936'], // 装饰点颜色(可选)
+            disk: ['#ffb933', '#ffe8b5', '#ffb933', '#ffd57c', '#ffb933', '#ffe8b5', '#ffd57c'], //中心奖盘的颜色，默认7彩(可选)
+            title: {
+                color: '#5c1e08',
+                font: '19px Arial'
+            } // 奖品标题样式(可选)
+        })
+
+        // 初始化转盘
+        wheelSurf.init()
+        // 抽奖
+        var throttle = true;
+        $("#start").on('click', function () {
+            $("#message").html('')
+            if(!throttle){
+                return false;
+            }
+            throttle = false;
+            var count = 0
+            // 计算奖品角度
+            for (var i = 0, l = initData.list.length; i < l; i++) {
+                if (winData.award.id == initData.list[i].id) {
+                    break;
+                }
+                count++
+            }
+            // 转盘抽奖，
+            wheelSurf.lottery(360 - (count * angel + angel / 2), function () {
+                $("#message").html(winData.message)
+                throttle = true;
+            })
+        })
+
+        
+    </script>
+</body>
+
+</html>
