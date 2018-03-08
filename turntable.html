@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="./jquery1.12.js"></script>
-    <script src="./rotate.js"></script>
+    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="./turntable.js"></script>
     <title>抽奖</title>
     <style>
         .lottery {
@@ -111,7 +111,7 @@
         var list = {}
         
         var angel = 360 / initData.list.length
-        // 格式化成需要的格式
+        // 格式化成插件需要的奖品列表格式
         for (var i = 0, l = initData.list.length; i < l; i++) {
             list[initData.list[i].rank] = {
                 id:initData.list[i].id,
