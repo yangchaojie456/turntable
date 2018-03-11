@@ -4,7 +4,7 @@
 ## 兼容性
 > 适用于所有主流浏览器及移动端的浏览器。**IE8及以下不支持**
 ## demo
->> http://www.yangchaojie.top/plugins/turntable
+>> http://www.yangchaojie.top/plugin/turntable
 ## 用法
 ```html
     <body>
