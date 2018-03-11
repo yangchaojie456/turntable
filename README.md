@@ -12,7 +12,7 @@
     </body>
 
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="./rotate.js"></script>
+    <script src="./turntable.js"></script>
     <script>
         // 定义转盘奖品
         var wheelSurf = $('#myCanvas').WheelSurf({
