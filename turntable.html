@@ -49,64 +49,72 @@
 
     <script>
         var wheelSurf
-        // 初始化装盘数据
+        // 初始化装盘数据 正常情况下应该由后台返回
         var initData = {
             "success": true,
             "list": [{
                     "id": 100,
                     "name": "5000元京东卡",
                     "image": "./images/1.png",
-                    "rank":1
+                    "rank":1,
+                    "percent":3
                 },
                 {
                     "id": 101,
                     "name": "1000元京东卡",
                     "image": "./images/2.png",
-                    "rank":2
+                    "rank":2,
+                    "percent":5
                 },
                 {
                     "id": 102,
                     "name": "100个比特币",
                     "image": "./images/3.png",
-                    "rank":3
+                    "rank":3,
+                    "percent":2
                 },
                 {
                     "id": 103,
                     "name": "50元话费",
                     "image": "./images/4.png",
-                    "rank":4
+                    "rank":4,
+                    "percent":49
                 },
                 {
                     "id": 104,
                     "name": "100元话费",
                     "image": "./images/5.png",
-                    "rank":5
+                    "rank":5,
+                    "percent":30
                 },
                 {
                     "id": 105,
                     "name": "500个比特币",
                     "image": "./images/6.png",
-                    "rank":6
+                    "rank":6,
+                    "percent":1
                 },
                 {
                     "id": 106,
                     "name": "500元京东卡",
                     "image": "./images/7.png",
-                    "rank":7
+                    "rank":7,
+                    "percent":10
                 }
             ]
         }
-        // 获奖信息
-        var winData = {
-            "success": true,
-            "message": "恭喜您！抽中5000元京东卡",
-            "award": {
-                "id": 100,
-                "name": "5000元京东卡"
-            },
-            "type": "goods"
-        }
 
+        // 计算分配获奖概率(前提所有奖品概率相加100%)
+        function getGift(){
+            var percent = Math.random()*100
+            var totalPercent = 0
+            for(var i = 0 ,l = initData.list.length;i<l;i++){
+                totalPercent += initData.list[i].percent
+                if(percent<=totalPercent){
+                    return initData.list[i]
+                }
+            }           
+        }
 
         var list = {}
         
@@ -143,6 +151,9 @@
         // 抽奖
         var throttle = true;
         $("#start").on('click', function () {
+
+            var winData = getGift() // 正常情况下获奖信息应该由后台返回
+
             $("#message").html('')
             if(!throttle){
                 return false;
@@ -153,7 +164,7 @@
 
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {                    
-                    if (winData.award.id == list[key].id) {
+                    if (winData.id == list[key].id) {
                         break;
                     }
                     count++    
@@ -162,7 +173,7 @@
       
             // 转盘抽奖，
             wheelSurf.lottery((count * angel + angel / 2), function () {
-                $("#message").html(winData.message)
+                $("#message").html(winData.name)
                 throttle = true;
             })
         })
